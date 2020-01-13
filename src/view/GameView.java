@@ -1,3 +1,4 @@
+package view;
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,8 +12,7 @@ public class GameView extends JPanel {
 		setLayout(new BorderLayout());
 		
 		// Add chess board
-		JPanel chessBoard = new JPanel();
-		chessBoard.setBackground(Color.red);
+		JPanel chessBoard = new ChessBoardView();
 		add(chessBoard, BorderLayout.CENTER);
 		
 		// Add chat board

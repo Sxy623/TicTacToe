@@ -1,6 +1,9 @@
+package view;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import main.*;
 
 public class LoginView extends JPanel implements ActionListener {
 	
@@ -32,25 +35,25 @@ public class LoginView extends JPanel implements ActionListener {
 //        add(iconLabel);
 
         // User Label
-        userLabel = new JLabel("User");
+        userLabel = new JLabel("Username");
         userLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
-        userLabel.setBounds(300, 300, 70, 50);
+        userLabel.setBounds(200, 300, 170, 50);
         add(userLabel);
 
         // Password Label
-        passwordLabel = new JLabel("Key");
+        passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
-        passwordLabel.setBounds(300, 350, 70, 50);
+        passwordLabel.setBounds(200, 350, 170, 50);
         add(passwordLabel);
 
         // User Text Field
         userTextField = new JTextField();
-        userTextField.setBounds(380, 310, 130, 30);
+        userTextField.setBounds(380, 310, 220, 30);
         add(userTextField);
 
         // Password Text Field
         passwordField = new JPasswordField();
-        passwordField.setBounds(380, 360, 130, 30);
+        passwordField.setBounds(380, 360, 220, 30);
         add(passwordField);
 
         // Login Button

@@ -1,4 +1,7 @@
+package main;
+
 import javax.swing.*;
+import view.*;
 
 public class Main {
 	
