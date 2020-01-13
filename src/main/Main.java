@@ -30,4 +30,5 @@ public class Main {
         mainFrame.add(currentPanel);
         mainFrame.setVisible(true);
 	}
+	
 }
