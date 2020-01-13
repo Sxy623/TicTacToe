@@ -1,17 +1,13 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class View extends JFrame {
+public class GameView extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public View() {
-		setVisible(true);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	public GameView() {
 		
-		// Set title and size
-		setTitle("Tic Tac Toe");
-		setBounds(150, 100, 800, 600);
+		// Set the layout
 		setLayout(new BorderLayout());
 		
 		// Add chess board
