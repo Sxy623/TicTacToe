@@ -10,7 +10,6 @@ public class ChessboardView extends JPanel {
     private static final long serialVersionUID = 1L;
     
     private final int width = 600;              // 窗口宽度
-    private final int height = 600;             // 窗口高度
     private final int rows = 3;                 // 大棋盘的行数
     private final int columns = 3;              // 大棋盘的列数
     private final int subChessBoardSize = 160;  // 小棋盘边长
@@ -22,6 +21,8 @@ public class ChessboardView extends JPanel {
     private final int largeItemSize = 140;      // 巨型圈圈和叉叉的边长
     private final int largeStroke = 15;         // 巨型画笔粗细
     private final int largeOffset = 5;          // 巨型圈圈和叉叉在网格中的偏移量
+    private final int tinyItemSize = 12;        // 微型圈圈和叉叉的边长
+    private final int tinyStroke = 4;           // 微型画笔粗细
     
     private Chessboard chessboard = new Chessboard();
     private boolean gameOver = false;           // 游戏是否结束
@@ -118,8 +119,36 @@ public class ChessboardView extends JPanel {
         g2.drawLine(x + largeOffset + largeItemSize, y + largeOffset, x + largeOffset, y + largeOffset + largeItemSize);
     }
     
-    private void drawSubChessBoard(int x, int y, Graphics2D g2) {
+    private void drawTinyCircle(int x, int y, Graphics2D g2) {
         // 设置颜色和粗细
+        g2.setColor(Color.red);
+        g2.setStroke(new BasicStroke(tinyStroke));
+        // 抗锯齿
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
+        // 绘制微型圈圈
+        g2.drawOval(x, y, tinyItemSize, tinyItemSize);
+    }
+    
+    private void drawTinyCross(int x, int y, Graphics2D g2) {
+        // 设置颜色和粗细
+        g2.setColor(Color.blue);
+        g2.setStroke(new BasicStroke(tinyStroke));
+        // 抗锯齿
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
+        // 绘制微型圈圈
+        g2.drawLine(x, y, x + tinyItemSize, y + tinyItemSize);
+        g2.drawLine(x + tinyItemSize, y, x, y + tinyItemSize);
+    }
+    
+    private void drawSubChessBoard(int x, int y, boolean limit, Graphics2D g2) {
+    	// 绘制限制区域
+    	if (limit) {
+    		g2.setColor(Color.lightGray);
+        	g2.fillRect(x - space / 3, y - space / 3, subChessBoardSize + space / 2, subChessBoardSize + space / 2);
+    	}
+    	// 设置颜色和粗细
         g2.setColor(Color.black);
         g2.setStroke(new BasicStroke(stroke));
         // 抗锯齿
@@ -160,6 +189,14 @@ public class ChessboardView extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
         
+        // 绘制提示
+        if (chessboard.isCircle) {
+        	g2.setColor(Color.red);
+        } else {
+        	g2.setColor(Color.blue);
+        }
+        g2.fillRect(585, 5, 10, 10);
+        
         for (int i = 1; i <= rows; i++) {
             for (int j = 1; j <= columns; j++) {
             	// 小棋盘已经决出胜负
@@ -176,7 +213,8 @@ public class ChessboardView extends JPanel {
             	// 小棋盘还未决出胜负
             	// 绘制棋盘格
             	else {
-            		drawSubChessBoard(j * space + (j - 1) * subChessBoardSize, i * space + (i - 1) * subChessBoardSize, g2);
+            		boolean limit = (chessboard.limit) && (i == chessboard.currentRow) && (j == chessboard.currentCol);
+            		drawSubChessBoard(j * space + (j - 1) * subChessBoardSize, i * space + (i - 1) * subChessBoardSize, limit, g2);
             	}
             }
         }

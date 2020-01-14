@@ -11,11 +11,11 @@ public class GameView extends JPanel {
 		// Set the layout
 		setLayout(new BorderLayout());
 		
-		// Add chessboard to current view
+		// Add chessboard
 		JPanel chessboardPanel = new ChessboardView();
 		add(chessboardPanel, BorderLayout.CENTER);
 		
-		// Add chatboard to current view
+		// Add chatboard
 		JPanel chatboardPanel = new JPanel();
 		chatboardPanel.setPreferredSize(new Dimension(200, 600));
 		chatboardPanel.setBackground(Color.blue);

@@ -5,16 +5,20 @@ public class Chessboard {
 	public Chess[][][][] chesses = new Chess[4][4][4][4];
 	public Chess[][] largeChesses = new Chess[4][4];
 	public Player winner;
+	public int currentRow = 2;                  // 当前小棋盘的行号
+	public int currentCol = 2;                  // 当前小棋盘的列号
+	public boolean limit = true;                // 是否要落在规定小棋盘中
+	public boolean isCircle = true;
 	
     private final int rows = 3;                 // 大棋盘的行数
     private final int columns = 3;              // 大棋盘的列数
-	private boolean isCircle = true;
+	
 	
 	public Chessboard() {
-		addChess(new Position(1, 1, 1, 1));
-		addChess(new Position(2, 2, 2, 3));
-		addLargeChess(3, 1, Player.CIRCLE);
-		addLargeChess(1, 3, Player.CROSS);
+//		addChess(new Position(1, 1, 1, 1));
+//		addChess(new Position(2, 2, 2, 3));
+//		addLargeChess(3, 1, Player.CIRCLE);
+//		addLargeChess(1, 3, Player.CROSS);
 	}
 	
 	// 向棋盘中添加棋子
@@ -25,6 +29,11 @@ public class Chessboard {
 		int col = position.col;
 		int subRow = position.subRow;
 		int subCol = position.subCol;
+		// 检查是否落在规定小棋盘中
+		if (limit) {
+			if (currentRow != row) return;
+			if (currentCol != col) return;
+		}
 		// 检测小棋盘是否已经决出胜负
 		if (largeChesses[row][col] != null) return;
 		// 检测格中是否已经有棋子
@@ -41,6 +50,9 @@ public class Chessboard {
     		chesses[row][col][subRow][subCol] = chess;
     		isCircle = !isCircle;
     	}
+    	// 更新下一步的小棋盘
+    	currentRow = subRow;
+    	currentCol = subCol;
 	}
 	
 	// 向棋盘中添加巨型棋子
@@ -84,6 +96,13 @@ public class Chessboard {
 	
 	// 判断获胜条件是否满足，更新游戏状态
 	public boolean updateGameStatus() {
+		// 更新限制条件
+		if (largeChesses[currentRow][currentCol] == null) {
+			limit = true;
+		} 
+		else {
+			limit = false;
+		}
 		// 检查行
 		for (int i = 1; i <= rows; i++) {
 			if (checkSame(largeChesses[i][1], largeChesses[i][2], largeChesses[i][3])) {
