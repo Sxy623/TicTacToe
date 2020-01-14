@@ -10,16 +10,16 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		// Create the window
+		// 创建窗口
 		mainFrame = new JFrame();
 		mainFrame.setVisible(true);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// Set title and size
+		// 设置标题和尺寸
 		mainFrame.setTitle("Tic Tac Toe");
-		mainFrame.setBounds(150, 100, 800, 600);
+		mainFrame.setBounds(150, 100, 800, 630);
 		
-		// Show the login view
+		// 显示登陆界面
 		currentPanel = new LoginView();
 		mainFrame.add(currentPanel);
 	}

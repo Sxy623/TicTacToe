@@ -2,6 +2,8 @@ package client;
 
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
+import model.*;
 import utility.*;
 
 public class Client {
@@ -14,13 +16,13 @@ public class Client {
     private String userName;
     private String opponentName;
 
-    public Client(String userID) {
-        this.userName = userID;
+    public Client(String userName) {
+        this.userName = userName;
         try {
             socket = new Socket(Utility.IP, Utility.PORT);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
-            writer.println("0#" + userID);  // 告知服务器本线程的用户ID
+            writer.println("0#" + userName);  // 将用户名告知服务器
             writer.flush();
             receiveMessage();   // 创建接受消息线程
         } catch (IOException e) {
@@ -45,13 +47,31 @@ public class Client {
                         	User.chatboardView.appendSting(message[1] + ": ", User.player.opponentColorString());
                         	User.chatboardView.appendSting(message[3] + "\n");
                         }
-                        // 发起挑战
+                        // 对方发起挑战
                         else if (message[0].equals("2")) {
-                        	
+                        	int answer = JOptionPane.showConfirmDialog(User.chessboardView, "是否接受来自 " + message[1] + " 的对战请求？", "对战请求", JOptionPane.YES_NO_OPTION);
+                        	setOpponent(message[1]);
+                        	// 同意对方
+                        	if (answer == JOptionPane.YES_OPTION) {
+                        		User.player = Player.CROSS;
+                        		sendMessage("0", 3);
+                        	}
+                        	// 拒绝对方
+                        	else if (answer == JOptionPane.NO_OPTION) {
+                        		sendMessage("1", 3);
+                        	}
                         }
-                        // 接受挑战
+                        // 对方回应挑战
                         else if (message[0].equals("3")) {
-                        	
+                        	// 对方同意
+                        	if (message[3].equals("0")) {
+                        		User.player = Player.CIRCLE;
+                        		JOptionPane.showMessageDialog(User.chessboardView, "对方接受，挑战开始！");
+                        	}
+                        	// 对方拒绝
+                        	else if (message[3].equals("1")) {
+                        		JOptionPane.showMessageDialog(User.chessboardView, "对方拒绝！");
+                        	}
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -69,7 +89,7 @@ public class Client {
         writer.flush();
     }
 
-    public void setOppentID(String oppentID) {
-        this.opponentName = oppentID;
+    public void setOpponent(String name) {
+        this.opponentName = name;
     }
 }

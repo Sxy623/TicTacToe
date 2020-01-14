@@ -14,6 +14,8 @@ public class User {
 	public static ChessboardView chessboardView;
 	
 	public static void createClient() {
+		
 		client = new Client(userName);
+		
 	}
 }
