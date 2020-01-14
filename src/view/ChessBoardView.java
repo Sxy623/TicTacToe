@@ -1,14 +1,10 @@
 package view;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
-
-import main.Main;
 import model.*;
 
-public class ChessBoardView extends JPanel {
+public class ChessboardView extends JPanel {
 
     private static final long serialVersionUID = 1L;
     
@@ -17,15 +13,15 @@ public class ChessBoardView extends JPanel {
     private final int subChessBoardSize = 160;  // 小棋盘边长
     private final int space = 30;               // 小棋盘间距
     private final int gridSize = 50;            // 网格边长
-    private final int itemSize = 40;            // 圈和叉的边长
+    private final int itemSize = 40;            // 圈圈和叉叉的边长
     private final int stroke = 5;               // 画笔粗细
     private final int offset = 2;               // 圈和叉在网格中的偏移量
     
-    private List<Position> list = new ArrayList<Position>();
+    private Chessboard chessboard = new Chessboard();
 
-    public ChessBoardView() {
+    public ChessboardView() {
         
-        setBackground(Color.green);
+        setBackground(Color.white);
         
         // 添加鼠标监听事件
         addMouseEvent();
@@ -41,7 +37,7 @@ public class ChessBoardView extends JPanel {
                 System.out.println("Mouse clicked at (" + e.getX() + ", " + e.getY() + ").");
                 Position position = calPosition(e.getX(), e.getY());
                 if (position != null) {
-                	list.add(position);
+                	chessboard.addChess(position);
                 }
                 repaint();
             }
@@ -56,18 +52,18 @@ public class ChessBoardView extends JPanel {
         // 抗锯齿
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
-        // 绘制圆形
+        // 绘制圈圈
         g2.drawOval(x + offset, y + offset, itemSize, itemSize);
     }
     
     private void drawCross(int x, int y, Graphics2D g2) {
         // 设置颜色和粗细
-        g2.setColor(Color.yellow);
+        g2.setColor(Color.blue);
         g2.setStroke(new BasicStroke(stroke));
         // 抗锯齿
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
-        // 绘制叉
+        // 绘制叉叉
         g2.drawLine(x + offset, y + offset, x + offset + itemSize, y + offset + itemSize);
         g2.drawLine(x + offset + itemSize, y + offset, x + offset, y + offset + itemSize);
     }
@@ -98,6 +94,19 @@ public class ChessBoardView extends JPanel {
         g2.drawLine(x, y + 2 * gridSize + stroke, x + 3 * gridSize, y + 2 * gridSize + stroke);
     }
     
+    private void drawChess(Chessboard chessboard, Graphics2D g2) {
+    	for (Chess chess : chessboard.list) {
+        	// 绘制圈圈
+        	if (chess.type == ChessType.CIRCLE) {
+        		drawCircle(chess.position, g2);
+        	}
+        	// 绘制叉叉
+        	else {
+        		drawCross(chess.position, g2);
+			}
+        }
+    }
+    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -109,19 +118,15 @@ public class ChessBoardView extends JPanel {
             }
         }
         
-        int x = initalXOfGrid(1, 1, 1, 1);
-        int y = initalYOfGrid(1, 1, 1, 1);
-        drawCircle(x, y, g2);
+//        int x = initalXOfGrid(1, 1, 1, 1);
+//        int y = initalYOfGrid(1, 1, 1, 1);
+//        drawCircle(x, y, g2);
+//        
+//        int x2 = initalXOfGrid(1, 2, 1, 1);
+//        int y2 = initalYOfGrid(1, 2, 1, 1);
+//        drawCross(x2, y2, g2);
         
-        int x2 = initalXOfGrid(1, 2, 1, 1);
-        int y2 = initalYOfGrid(1, 2, 1, 1);
-        drawCross(x2, y2, g2);
-        
-        list.add(new Position(1, 1, 1, 1));
-        
-        for (Position position : list) {
-            drawCircle(position, g2);
-        }
+        drawChess(chessboard, g2);
     }
     
     private int initalXOfGrid(int row, int col, int subRow, int subCol) {
