@@ -3,22 +3,33 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.*;
 
 public class ChatboardView extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    
+    JTextPane textPane = new JTextPane();
+    JTextField textField = new JTextField();
     
     public ChatboardView() {
 		
     	setLayout(new BorderLayout());
     	setBorder(BorderFactory.createEtchedBorder());
         
-        JTextArea textArea = new JTextArea();
-        textArea.setLineWrap(true);  // 自动换行
-        textArea.setEditable(false);  // 不可编辑
-        add(new JScrollPane(textArea), BorderLayout.CENTER);  // 滚动条
+        textPane.setEditable(false);  // 不可编辑
+        // 滚动条
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(textPane);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);  // 禁止水平滚动条
+        add(scrollPane, BorderLayout.CENTER);  
         
-        JTextField textField = new JTextField();
+        Style normal = textPane.getStyledDocument().addStyle(null, null);
+        Style redStyle = textPane.addStyle("red", normal);
+        Style blueStyle = textPane.addStyle("blue", normal);
+        StyleConstants.setForeground(redStyle, Color.RED);
+        StyleConstants.setForeground(blueStyle, Color.BLUE);
+        
         KeyAdapter keyPressed = new KeyAdapter() {
         	@Override
         	public void keyPressed(KeyEvent e) {
@@ -26,7 +37,8 @@ public class ChatboardView extends JPanel {
         		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
         			String s = textField.getText();
         			if (s.isEmpty()) return;  // 不允许发送空消息
-        			textArea.append(s + "\n");
+        			appendSting("Sxy: ", "red");
+        			appendSting(s + "\n");
         			textField.setText("");
         		}
         	}
@@ -34,5 +46,23 @@ public class ChatboardView extends JPanel {
         textField.addKeyListener(keyPressed);
         add(textField, BorderLayout.SOUTH);
 	}
+    
+    private void appendSting(String str) {
+    	try {
+            textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle("normal"));
+            textPane.setCaretPosition(textPane.getDocument().getLength());
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void appendSting(String str, String color) {
+    	try {
+            textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle(color));
+            textPane.setCaretPosition(textPane.getDocument().getLength());
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
