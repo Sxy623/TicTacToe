@@ -7,19 +7,13 @@ public class Chessboard {
 	public Player winner;
 	public int currentRow = 2;                  // 当前小棋盘的行号
 	public int currentCol = 2;                  // 当前小棋盘的列号
-	public boolean limit = true;                // 是否要落在规定小棋盘中
+	public boolean limit = true;                // 是否限制区域
 	public boolean isCircle = true;
 	
     private final int rows = 3;                 // 大棋盘的行数
     private final int columns = 3;              // 大棋盘的列数
 	
-	
-	public Chessboard() {
-//		addChess(new Position(1, 1, 1, 1));
-//		addChess(new Position(2, 2, 2, 3));
-//		addLargeChess(3, 1, Player.CIRCLE);
-//		addLargeChess(1, 3, Player.CROSS);
-	}
+	public Chessboard() {}
 	
 	// 向棋盘中添加棋子
 	public void addChess(Position position) {

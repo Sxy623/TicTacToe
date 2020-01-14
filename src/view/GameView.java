@@ -16,9 +16,8 @@ public class GameView extends JPanel {
 		add(chessboardPanel, BorderLayout.CENTER);
 		
 		// Add chatboard
-		JPanel chatboardPanel = new JPanel();
+		JPanel chatboardPanel = new ChatboardView();
 		chatboardPanel.setPreferredSize(new Dimension(200, 600));
-		chatboardPanel.setBackground(Color.blue);
 		add(chatboardPanel, BorderLayout.EAST);
 	}
 }
