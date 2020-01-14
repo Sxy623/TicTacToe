@@ -1,14 +1,16 @@
 package model;
 
+import client.User;
+
 public class Chessboard {
 	
 	public Chess[][][][] chesses = new Chess[4][4][4][4];
 	public Chess[][] largeChesses = new Chess[4][4];
-	public Player winner;
 	public int currentRow = 2;                  // 当前小棋盘的行号
 	public int currentCol = 2;                  // 当前小棋盘的列号
 	public boolean limit = true;                // 是否限制区域
-	public boolean isCircle = true;
+	public Player currentPlayer = Player.CIRCLE;
+	public Player winner;
 	
     private final int rows = 3;                 // 大棋盘的行数
     private final int columns = 3;              // 大棋盘的列数
@@ -33,17 +35,18 @@ public class Chessboard {
 		// 检测格中是否已经有棋子
 		if (chesses[row][col][subRow][subCol] != null) return;
     	// 添加圈圈到棋盘
-    	if (isCircle) {
+    	if (currentPlayer == Player.CIRCLE) {
     		chess = new Chess(position, Player.CIRCLE);
     		chesses[row][col][subRow][subCol] = chess;
-    		isCircle = !isCircle;
+    		currentPlayer = Player.CROSS;
     	}
     	// 添加叉叉到棋盘
     	else {
     		chess = new Chess(position, Player.CROSS);
     		chesses[row][col][subRow][subCol] = chess;
-    		isCircle = !isCircle;
+    		currentPlayer = Player.CIRCLE;
     	}
+    	User.client.sendMessage("" + row + "#" + col + "#" + subRow + "#"+ subCol, 4);
     	// 更新下一步的小棋盘
     	currentRow = subRow;
     	currentCol = subCol;

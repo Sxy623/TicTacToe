@@ -73,6 +73,17 @@ public class Client {
                         		JOptionPane.showMessageDialog(User.chessboardView, "对方拒绝！");
                         	}
                         }
+                        // 对方下棋
+                        else if (message[0].equals("4")) {
+                        	int row = Integer.parseInt(message[3]);
+                        	int col = Integer.parseInt(message[4]);
+                        	int subRow = Integer.parseInt(message[5]);
+                        	int subCol = Integer.parseInt(message[6]);
+                        	User.chessboardView.chessboard.addChess(new Position(row, col, subRow, subCol));
+                        	User.chessboardView.chessboard.updateSubChessboard(row, col);
+                        	User.chessboardView.gameOver = User.chessboardView.chessboard.updateGameStatus();
+                        	User.chessboardView.repaint();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

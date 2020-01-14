@@ -1,5 +1,7 @@
 package client;
 
+import javax.swing.JFrame;
+
 import model.*;
 import view.*;
 
@@ -10,6 +12,7 @@ public class User {
 	public static String userName;
 	public static Player player;
 	
+	public static JFrame frame;
 	public static ChatboardView chatboardView;
 	public static ChessboardView chessboardView;
 	

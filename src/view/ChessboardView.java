@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import client.User;
 import model.*;
 
 public class ChessboardView extends JPanel {
@@ -22,8 +24,8 @@ public class ChessboardView extends JPanel {
     private final int largeStroke = 15;         // 巨型画笔粗细
     private final int largeOffset = 5;          // 巨型圈圈和叉叉在网格中的偏移量
     
-    private Chessboard chessboard = new Chessboard();
-    private boolean gameOver = false;           // 游戏是否结束
+    public Chessboard chessboard = new Chessboard();
+    public boolean gameOver = false;           // 游戏是否结束
 
     public ChessboardView() {
         
@@ -43,6 +45,7 @@ public class ChessboardView extends JPanel {
                 super.mousePressed(e);
                 System.out.println("Mouse clicked at (" + e.getX() + ", " + e.getY() + ").");
                 if (gameOver) return;
+                if (User.player != chessboard.currentPlayer) return;
                 Position position = calPosition(e.getX(), e.getY());
                 if (position != null) {
                 	chessboard.addChess(position);
@@ -150,7 +153,7 @@ public class ChessboardView extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
         
         // 绘制提示
-        if (chessboard.isCircle) {
+        if (chessboard.currentPlayer == Player.CIRCLE) {
         	g2.setColor(Color.red);
         } else {
         	g2.setColor(Color.blue);

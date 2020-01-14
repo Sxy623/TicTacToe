@@ -19,10 +19,10 @@ public class LoginView extends JPanel implements ActionListener {
 
     public LoginView() {
     	
-    	// Set the layout
+    	// 布局
     	setLayout(null);
 
-    	//  Add components
+    	// 添加组件
     	addComponents();
     }
 
@@ -35,29 +35,31 @@ public class LoginView extends JPanel implements ActionListener {
 //        iconLabel.setBounds(325, 100, 150, 150);
 //        add(iconLabel);
 
-        // User Label
+        // 用户名标签
         userLabel = new JLabel("Username");
         userLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
+        userLabel.setHorizontalAlignment(JLabel.CENTER);
         userLabel.setBounds(200, 300, 170, 50);
         add(userLabel);
 
-        // Password Label
+        // 密码标签
         passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 30));
+        passwordLabel.setHorizontalAlignment(JLabel.CENTER);
         passwordLabel.setBounds(200, 350, 170, 50);
         add(passwordLabel);
 
-        // User Text Field
+        // 用户名文本框
         userTextField = new JTextField();
         userTextField.setBounds(380, 310, 220, 30);
         add(userTextField);
 
-        // Password Text Field
+        // 密码文本框
         passwordField = new JPasswordField();
         passwordField.setBounds(380, 360, 220, 30);
         add(passwordField);
 
-        // Login Button
+        // 登陆按钮
         loginButton = new JButton("Login");
         loginButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         loginButton.setBounds(350, 420, 100, 40);
@@ -74,6 +76,7 @@ public class LoginView extends JPanel implements ActionListener {
             	System.out.println("Login button pressed.");
             	User.userName = userTextField.getText();
             	User.createClient();
+            	User.frame.setTitle("Tic Tac Toe - " + User.userName);
                 Main.changeView(new GameView());
                 break;
         }

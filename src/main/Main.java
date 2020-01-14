@@ -1,6 +1,8 @@
 package main;
 
 import javax.swing.*;
+
+import client.User;
 import view.*;
 
 public class Main {
@@ -14,6 +16,7 @@ public class Main {
 		mainFrame = new JFrame();
 		mainFrame.setVisible(true);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		User.frame = mainFrame;
 		
 		// 设置标题和尺寸
 		mainFrame.setTitle("Tic Tac Toe");
