@@ -3,7 +3,9 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import client.*;
 import main.*;
+import model.Player;
 
 public class LoginView extends JPanel implements ActionListener {
 	
@@ -71,6 +73,9 @@ public class LoginView extends JPanel implements ActionListener {
         switch (command) {
             case "loginButton":
             	System.out.println("Login button pressed.");
+            	User.userName = userTextField.getText();
+            	User.player = Player.CROSS;
+            	User.createClient();
                 Main.changeView(new GameView());
                 break;
         }

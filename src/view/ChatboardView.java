@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
+import client.User;
+
 public class ChatboardView extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -37,8 +39,9 @@ public class ChatboardView extends JPanel {
         		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
         			String s = textField.getText();
         			if (s.isEmpty()) return;  // 不允许发送空消息
-        			appendSting("Sxy: ", "red");
+        			appendSting(User.userName + ": ", User.player.colorString());
         			appendSting(s + "\n");
+        			User.client.sendMessage(s, 1);
         			textField.setText("");
         		}
         	}
@@ -47,7 +50,7 @@ public class ChatboardView extends JPanel {
         add(textField, BorderLayout.SOUTH);
 	}
     
-    private void appendSting(String str) {
+    public void appendSting(String str) {
     	try {
             textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle("normal"));
             textPane.setCaretPosition(textPane.getDocument().getLength());
@@ -56,7 +59,7 @@ public class ChatboardView extends JPanel {
         }
     }
     
-    private void appendSting(String str, String color) {
+    public void appendSting(String str, String color) {
     	try {
             textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle(color));
             textPane.setCaretPosition(textPane.getDocument().getLength());

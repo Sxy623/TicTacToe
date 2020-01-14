@@ -1,6 +1,8 @@
 package view;
+
 import java.awt.*;
 import javax.swing.*;
+import client.*;
 
 public class GameView extends JPanel {
 	
@@ -12,12 +14,14 @@ public class GameView extends JPanel {
 		setLayout(new BorderLayout());
 		
 		// Add chessboard
-		JPanel chessboardPanel = new ChessboardView();
+		ChessboardView chessboardPanel = new ChessboardView();
 		add(chessboardPanel, BorderLayout.CENTER);
+		User.chessboardView = chessboardPanel;
 		
 		// Add chatboard
-		JPanel chatboardPanel = new ChatboardView();
+		ChatboardView chatboardPanel = new ChatboardView();
 		chatboardPanel.setPreferredSize(new Dimension(200, 600));
 		add(chatboardPanel, BorderLayout.EAST);
+		User.chatboardView = chatboardPanel;
 	}
 }
