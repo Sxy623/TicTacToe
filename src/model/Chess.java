@@ -3,10 +3,10 @@ package model;
 public class Chess {
 	
 	public Position position;
-	public ChessType type;
+	public Player player;
 	
-	public Chess(Position position, ChessType type) {
+	public Chess(Position position, Player player) {
 		this.position = position;
-		this.type = type;
+		this.player = player;
 	}
 }
