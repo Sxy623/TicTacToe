@@ -103,7 +103,7 @@ public class ChessboardView extends JPanel {
         g2.setStroke(new BasicStroke(largeStroke));
         int x = initalXOfGrid(new Position(row, col, 1, 1));
         int y = initalYOfGrid(new Position(row, col, 1, 1));
-        // 绘制巨型圈圈
+        // 绘制巨型叉叉
         g2.drawLine(x + largeOffset, y + largeOffset, x + largeOffset + largeItemSize, y + largeOffset + largeItemSize);
         g2.drawLine(x + largeOffset + largeItemSize, y + largeOffset, x + largeOffset, y + largeOffset + largeItemSize);
     }

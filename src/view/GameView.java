@@ -22,7 +22,7 @@ public class GameView extends JPanel {
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String opponentName = JOptionPane.showInputDialog("想挑战的用户", "发起对战");
+				String opponentName = JOptionPane.showInputDialog("想挑战的用户");
 				User.client.setOpponent(opponentName);
 				User.client.sendMessage("", 2);
 			}

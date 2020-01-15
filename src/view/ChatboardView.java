@@ -17,6 +17,7 @@ public class ChatboardView extends JPanel {
     public ChatboardView() {
 		
     	setLayout(new BorderLayout());
+    	// 边框
     	setBorder(BorderFactory.createEtchedBorder());
         
         textPane.setEditable(false);  // 不可编辑
@@ -50,6 +51,7 @@ public class ChatboardView extends JPanel {
         add(textField, BorderLayout.SOUTH);
 	}
     
+    // 添加普通样式的文字
     public void appendSting(String str) {
     	try {
             textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle("normal"));
@@ -59,6 +61,7 @@ public class ChatboardView extends JPanel {
         }
     }
     
+    // 添加特殊样式的文字
     public void appendSting(String str, String color) {
     	try {
             textPane.getDocument().insertString(textPane.getDocument().getLength(), str, textPane.getStyle(color));
