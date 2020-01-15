@@ -54,6 +54,7 @@ public class Client {
                         	// 同意对方
                         	if (answer == JOptionPane.YES_OPTION) {
                         		User.player = Player.CROSS;
+                        		User.chessboardView.repaint();
                         		sendMessage("0", 3);
                         	}
                         	// 拒绝对方
@@ -67,6 +68,7 @@ public class Client {
                         	if (message[3].equals("0")) {
                         		User.player = Player.CIRCLE;
                         		JOptionPane.showMessageDialog(User.chessboardView, "对方接受，挑战开始！");
+                        		User.chessboardView.repaint();
                         	}
                         	// 对方拒绝
                         	else if (message[3].equals("1")) {

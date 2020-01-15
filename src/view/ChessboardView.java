@@ -152,13 +152,21 @@ public class ChessboardView extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT);
         
-        // 绘制提示
+        // 绘制当前颜色
         if (chessboard.currentPlayer == Player.CIRCLE) {
         	g2.setColor(Color.red);
-        } else {
+        } else if (chessboard.currentPlayer == Player.CROSS) {
         	g2.setColor(Color.blue);
         }
         g2.fillRect(5, 5, 10, 10);
+        
+        // 绘制自己颜色
+        if (User.player == Player.CIRCLE) {
+        	g2.setColor(Color.red);
+        } else if (User.player  == Player.CROSS) {
+        	g2.setColor(Color.blue);
+        }
+        g2.fillRect(585, 5, 10, 10);
         
         for (int i = 1; i <= rows; i++) {
             for (int j = 1; j <= columns; j++) {

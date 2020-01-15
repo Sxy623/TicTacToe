@@ -28,7 +28,7 @@ public class LoginView extends JPanel implements ActionListener {
 
     private void addComponents() {
 
-        // Image Icon
+        // 游戏图标
 //        ImageIcon iconImage = new ImageIcon(Utility.iconPath);
 //        iconImage.setImage(iconImage.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT));
 //        iconLabel = new JLabel(iconImage);

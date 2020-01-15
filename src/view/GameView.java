@@ -17,7 +17,7 @@ public class GameView extends JPanel {
 		
 		// 菜单栏
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("对战");
+		JMenu menu = new JMenu("开始");
 		JMenuItem item = new JMenuItem("发起对战");
 		item.addActionListener(new ActionListener() {
 			@Override
